@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "Echo Break",
+    "version": "1.2",
+    "description": "Break out of your YouTube bubble by watching curated diverse content in a loop.",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "tabs",
+        "https://www.youtube.com/*"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon-16.png",
+            "48": "icons/icon-48.png"
+        }
+    }
+}

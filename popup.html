@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Break</title>
+    <!-- Get browser-polyfill.js from https://unpkg.com/webextension-polyfill/dist/browser-polyfill.min.js -->
+    <script src="https://unpkg.com/webextension-polyfill/dist/browser-polyfill.min.js"></script>
+    <script src="popup.js" defer></script>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Add FontAwesome for the brain icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            padding: 25px;
+            width: 280px;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f1f5ff 100%);
+            border-radius: 15px;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-wrapper {
+            position: relative;
+            margin: 20px auto;
+        }
+
+        #toggle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(129, 140, 248, 0.2);
+        }
+
+        #toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(129, 140, 248, 0.3);
+        }
+
+        #toggle:active {
+            transform: translateY(1px);
+        }
+
+        #toggle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        #toggle:hover::before {
+            transform: rotate(45deg) translate(10%, 10%);
+        }
+
+        .button-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Sparkles animation */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Status indicator */
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #6366f1;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .status.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pulse animation for active state */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(129, 140, 248, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(129, 140, 248, 0);
+            }
+        }
+
+        .active-button {
+            animation: pulse 2s infinite;
+            background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Echo Break</h2>
+        <div class="button-wrapper">
+            <button id="toggle">
+                <i class="fas fa-brain button-icon"></i>
+                <span class="button-text">Start</span>
+            </button>
+        </div>
+        <div class="status">Breaking your echo chamber...</div>
+    </div>
+</body>
+
+</html>
